@@ -6,8 +6,15 @@ type TodoList struct {
 	Description string `json:"description"`
 }
 
-type UsersList struct {
+type TodoItem struct {
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Done        bool   `json:"done"`
+}
+
+type ListItems struct {
 	Id     int
-	UserId int
 	ListId int
+	ItemId int
 }
