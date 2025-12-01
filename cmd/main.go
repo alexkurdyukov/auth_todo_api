@@ -4,17 +4,19 @@ import (
 	"log"
 	"todo"
 	"todo/pkg/handler"
+	"todo/pkg/repository"
+	"todo/pkg/service"
 )
 
 func main() {
-	// инициализируем handlers и роуты
-	handler := new(handler.Handler)
-	router := handler.InitRoutes()
+	repos := repository.NewRepository()
+	services := service.NewService(repos)
+	handlers := handler.NewHandler(services)
 
 	// старт сервера, запускаем и прокидываем в него routes нашего api
 	server := new(todo.Server)
 
-	if err := server.Run("8080", router); err != nil {
+	if err := server.Run("8080", handlers.InitRoutes()); err != nil {
 		log.Fatal("cannot start server")
 	}
 }

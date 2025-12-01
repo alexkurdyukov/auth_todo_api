@@ -1,18 +1,32 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"todo/pkg/service"
 
-type Handler struct{}
+	"github.com/gin-gonic/gin"
+)
+
+type Handler struct {
+	services *service.Service
+}
+
+func NewHandler(services *service.Service) *Handler {
+	return &Handler{
+		services: services,
+	}
+}
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
+	// api endpoints для аутентификации и регистрации пользователя
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 	}
 
+	// api endpoints для todo листов и элементов этих туду листов
 	api := router.Group("api")
 	{
 		lists := api.Group("/lists")
