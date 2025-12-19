@@ -50,7 +50,7 @@ func main() {
 	server := new(todo.Server)
 
 	if err := server.Run(port, handlers.InitRoutes()); err != nil {
-		logrus.Fatal("cannot start server")
+		logrus.Fatalf("cannot start server: %s", err.Error())
 	}
 }
 
